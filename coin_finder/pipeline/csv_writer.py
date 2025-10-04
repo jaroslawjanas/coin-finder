@@ -32,16 +32,11 @@ class AsyncCSVWriter:
             for hit in hits:
                 writer.writerow(
                     {
-                        "detected_at": hit.detected_at_iso,
-                        "address": hit.address,
                         "private_key_hex": hit.private_key_hex,
                         "public_key_hex": hit.public_key_hex,
+                        "address": hit.address,
                         "balance_wei": str(hit.balance_wei),
                         "balance_eth": hit.balance_eth,
-                        "worker_id": hit.worker_id,
-                        "batch_id": hit.batch_id,
-                        "batch_index": hit.index,
-                        "provider": hit.provider,
-                        "seed_descriptor": hit.seed_descriptor,
+                        "detected_at": hit.detected_at_iso,
                     }
                 )

@@ -17,17 +17,12 @@ from coin_finder.ui.dashboard import dashboard_loop
 logger = logging.getLogger(__name__)
 
 CSV_HEADERS: Sequence[str] = (
-    "detected_at",
-    "address",
     "private_key_hex",
     "public_key_hex",
+    "address",
     "balance_wei",
     "balance_eth",
-    "worker_id",
-    "batch_id",
-    "batch_index",
-    "provider",
-    "seed_descriptor",
+    "detected_at",
 )
 
 
