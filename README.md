@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://i.imgur.com/8HursSE.png" alt="CoinFinder">
+  <img src="https://i.imgur.com/SvxWJIh.png" alt="CoinFinder">
 </p>
 
 ## What Is This Madness?
