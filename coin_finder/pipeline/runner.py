@@ -32,7 +32,7 @@ CSV_HEADERS: Sequence[str] = (
 
 
 async def _async_main(config: AppConfig) -> None:
-    stats = Statistics()
+    stats = Statistics(store_path=config.output_dir / "stats.json")
     stop_event = asyncio.Event()
     csv_writer = AsyncCSVWriter(config.hits_path, headers=CSV_HEADERS)
 
@@ -76,6 +76,7 @@ async def _async_main(config: AppConfig) -> None:
             with suppress(asyncio.CancelledError):
                 await asyncio.gather(*worker_tasks, return_exceptions=True)
                 await asyncio.gather(dashboard_task, return_exceptions=True)
+            await stats.close()
 
 
 def run(config: AppConfig) -> None:

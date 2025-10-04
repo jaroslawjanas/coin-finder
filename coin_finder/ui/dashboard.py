@@ -45,6 +45,18 @@ def _build_rate_table(snapshot: StatsSnapshot) -> Table:
     return table
 
 
+def _build_lifetime_table(snapshot: StatsSnapshot) -> Table:
+    table = Table(title="Lifetime", expand=True, box=box.SIMPLE, show_header=False)
+    table.add_column("metric", justify="left")
+    table.add_column("value", justify="right")
+    table.add_row("Runtime", _format_duration(snapshot.lifetime_runtime))
+    table.add_row("Total Keys", f"{snapshot.lifetime_total_keys:,}")
+    table.add_row("Keys/sec", f"{snapshot.lifetime_keys_per_sec:,.2f}")
+    table.add_row("Hits Found", f"{snapshot.lifetime_total_hits:,}")
+    table.add_row("Hit Chance", f"{snapshot.lifetime_hit_chance:.3e}")
+    return table
+
+
 async def dashboard_loop(
     stats: Statistics,
     stop_event: asyncio.Event,
@@ -57,6 +69,7 @@ async def dashboard_loop(
     layout.split(
         Layout(name="summary", ratio=2),
         Layout(name="rates", ratio=1),
+        Layout(name="lifetime", ratio=1),
     )
 
     refresh_hz = None
@@ -82,6 +95,13 @@ async def dashboard_loop(
                     _build_rate_table(snapshot),
                     title="Rates",
                     border_style="magenta",
+                )
+            )
+            layout["lifetime"].update(
+                Panel(
+                    _build_lifetime_table(snapshot),
+                    title="Lifetime Stats",
+                    border_style="green",
                 )
             )
             if refresh_interval <= 0:
