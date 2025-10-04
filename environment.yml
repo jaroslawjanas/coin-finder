@@ -1,0 +1,19 @@
+name: coin-finder
+channels:
+  - default
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - aiohttp>=3.9
+      - anyio>=4.4
+      - backoff>=2.2
+      - coincurve>=19.0
+      - eth-keys>=0.4
+      - eth-utils>=2.3
+      - pycryptodome>=3.20
+      - python-dotenv>=1.0
+      - rich>=13.7
+      - typer[all]>=0.12
+      - uvloop>=0.20; sys_platform != "win32"
