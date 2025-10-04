@@ -36,17 +36,16 @@ def _build_summary_table(snapshot: StatsSnapshot) -> Table:
 
 
 def _build_rate_table(snapshot: StatsSnapshot) -> Table:
-    table = Table(title="Throughput", expand=True, box=box.SIMPLE, show_header=False)
+    table = Table(expand=True, box=box.SIMPLE, show_header=False)
     table.add_column("metric", justify="left")
     table.add_column("value", justify="right")
     table.add_row("Requests/sec", f"{snapshot.requests_per_sec:,.2f}")
     table.add_row("Keys/sec", f"{snapshot.keys_per_sec:,.2f}")
-    table.add_row("Hits/sec", f"{snapshot.hits_per_sec:,.6f}")
     return table
 
 
 def _build_lifetime_table(snapshot: StatsSnapshot) -> Table:
-    table = Table(title="Lifetime", expand=True, box=box.SIMPLE, show_header=False)
+    table = Table(expand=True, box=box.SIMPLE, show_header=False)
     table.add_column("metric", justify="left")
     table.add_column("value", justify="right")
     table.add_row("Runtime", _format_duration(snapshot.lifetime_runtime))
@@ -93,7 +92,7 @@ async def dashboard_loop(
             layout["rates"].update(
                 Panel(
                     _build_rate_table(snapshot),
-                    title="Rates",
+                    title="Throughput Rates",
                     border_style="magenta",
                 )
             )
