@@ -1,4 +1,6 @@
-# coin-finder
+<p align="center">
+  <img src="https://i.imgur.com/8HursSE.png" alt="CoinFinder">
+</p>
 
 ## What Is This Madness?
 
@@ -151,6 +153,8 @@ python -m coin_finder scan --workers 6 --batch-size 100
 ```
 
 The process runs until interrupted (Ctrl+C). Hits are appended to `output/eth_hits.csv`. The dashboard renders three stacked panels—the main summary, *Throughput Rates* (requests/sec and keys/sec), and *Lifetime Stats* (runtime, totals, and hit chance). Lifetime counters persist between runs via `output/stats.json`.
+
+![Dashboard Preview](https://i.imgur.com/aTvXDOb.png)
 
 ---
 
