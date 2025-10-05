@@ -56,42 +56,46 @@ Let's quantify exactly how hopeless this endeavor is.
 
 ### The Keyspace
 
-Ethereum uses 256-bit private keys, giving us a search space of:
+Here's a crucial distinction: Ethereum uses **256-bit private keys**, but these are hashed down to **160-bit addresses** using the Keccak-256 algorithm. When we're searching for funded wallets, what matters is the **address space**, not the private key space.
 
-$$2^{256} \approx 1.16 \times 10^{77} \text{ possible keys}$$
+**Private key space:** $2^{256} \approx 1.16 \times 10^{77}$ possible private keys
 
-To put this in perspective, this number is larger than the estimated number of atoms in the observable universe ($10^{80}$... wait, actually it's close, but still mind-bogglingly huge).
+**Address space:** $2^{160} \approx 1.46 \times 10^{48}$ possible addresses
+
+Why does this matter? Because multiple private keys can theoretically map to the same address (though finding such a collision is still astronomically unlikely). When searching for a match, we're looking for any private key that produces a funded address - so the **address space** is our relevant search domain.
+
+To put $2^{160}$ in perspective: this is still about 100 billion times larger than the estimated number of atoms in the observable universe.
 
 ### The Target
 
-Let's be extremely generous and assume there are $10^9$ (1 billion) Ethereum addresses with positive balances. The probability of randomly generating one of these addresses is:
+Current estimates suggest there are approximately $1.1 \times 10^8$ (110 million) Ethereum addresses with positive balances. However, for the sake of this thought experiment, let's be extremely generous and assume there are $10^9$ (1 billion) funded addresses. The probability of randomly generating a private key that maps to one of these addresses is:
 
-$$P(\text{hit}) = \frac{10^9}{10^{77}} = 10^{-68}$$
+$$P(\text{hit}) = \frac{10^9}{1.46 \times 10^{48}} \approx 6.8 \times 10^{-40}$$
 
 ### Time to Success
 
 Now let's imagine we somehow commandeer **all computational power on Earth**. As of 2025, estimates put total global computing power at roughly $10^{21}$ FLOPS. Let's generously assume we can check $10^{18}$ keys per second (unrealistic, but let's dream big).
 
-Since there are $10^9$ funded addresses in a keyspace of $10^{77}$, the expected number of attempts to find one is:
+Since there are $10^9$ funded addresses in an address space of $1.46 \times 10^{48}$, the expected number of attempts to find one is:
 
-$$\text{Expected attempts} = \frac{10^{77}}{10^9} = 10^{68}$$
+$$\text{Expected attempts} = \frac{1.46 \times 10^{48}}{10^9} = 1.46 \times 10^{39}$$
 
 The expected time to find a single match is:
 
-$$t = \frac{10^{68}}{10^{18}} = 10^{50} \text{ seconds}$$
+$$t = \frac{1.46 \times 10^{39}}{10^{18}} = 1.46 \times 10^{21} \text{ seconds}$$
 
 Converting to years ($3.15 \times 10^7$ seconds per year):
 
-$$t \approx 3.2 \times 10^{42} \text{ years}$$
+$$t \approx 4.6 \times 10^{13} \text{ years}$$
 
-**Translation:** The universe is approximately $1.4 \times 10^{10}$ years old. You'd need to run this program for about $2.3 \times 10^{32}$ consecutive universe lifetimes. To put this in cosmic perspective:
+**Translation:** The universe is approximately $1.4 \times 10^{10}$ years old. You'd need to run this program for about **3,300 consecutive universe lifetimes**. To put this in cosmic perspective:
 
-- **All stars burn out**: Around $10^{14}$ years - the last stars would fade to black while you're only $10^{-28}$ of the way there. You'd continue in total darkness for another $10^{28}$ years.
-- **Proton decay** (if it happens): $10^{34}$ to $10^{40}$ years (lower bound) - you'd finish searching somewhere in the middle of this range, meaning the very atoms making up your computer might decay before, during, or after your search completes. Either way, searching in a universe of pure radiation.
-- **Stellar-mass black holes evaporate**: Around $10^{67}$ years - you'd finish your search about $10^{25}$ years BEFORE these start evaporating. The universe would still have these dim beacons while you complete your futile quest.
-- **Supermassive black holes evaporate**: Around $10^{85}$ years - if you could somehow keep running until then, you'd complete your entire search about $10^{43}$ times over and expect to find roughly $3 \times 10^{42}$ funded addresses. Not bad! Except there's no universe left, no Ethereum network, and you're a disembodied search algorithm floating in an infinite void of darkness.
+- **All stars burn out**: Around $10^{14}$ years - you'd actually finish your search BEFORE the last stars die! Though you'd still be searching in darkness for the last third of your quest as stars progressively burn out.
+- **Proton decay** (if it happens): $10^{34}$ to $10^{40}$ years (lower bound) - you'd finish searching long, long before even the lower estimates of proton decay. The atoms making up your computer would remain intact throughout your entire futile search.
+- **Stellar-mass black holes evaporate**: Around $10^{67}$ years - you'd finish your search about $10^{53}$ years before these even start evaporating. 
+- **Supermassive black holes evaporate**: Around $10^{85}$ years - if you could somehow keep running until then, you'd complete your entire search about $10^{71}$ times over. You'd find approximately $10^{80}$ funded addresses - which ironically is close to the number of atoms in the observable universe. Too bad none of it exists anymore.
 
-Even in a dead, dark universe with no stars, no planets, no atoms - just you, somehow, checking keys - you'd finish your search and find nothing long before the final supermassive black holes evaporated into Hawking radiation. The universe would literally rather become an endless void of scattered photons than let you randomly guess someone's private key.
+In a dead, dark universe with no stars, no planets, no atoms - just you, somehow, checking keys - you'd finish your search long before the final supermassive black holes evaporated into Hawking radiation.
 
 You might ask the universe's last superintelligent computer: *"How can the net amount of entropy of the universe be massively decreased?"* hoping to somehow reverse time and continue your search. But even Multivac's distant descendant would simply respond: *INSUFFICIENT DATA FOR A MEANINGFUL ANSWER.*
 
@@ -99,13 +103,13 @@ You might ask the universe's last superintelligent computer: *"How can the net a
 
 "But wait," you might say, "what about the birthday paradox? If I check billions of addresses, don't my odds improve?" 
 
-Not meaningfully. When searching for any of the $10^9$ funded addresses by checking $n$ random keys, your success probability is:
+Not meaningfully. When searching for any of the $10^9$ funded addresses by checking $n$ random keys in an address space of $1.46 \times 10^{48}$, your success probability is:
 
-$$P \approx 1 - e^{-\frac{n \times 10^9}{10^{77}}} = 1 - e^{-n \times 10^{-68}}$$
+$$P \approx 1 - e^{-\frac{n \times 10^9}{1.46 \times 10^{48}}} = 1 - e^{-n \times 6.8 \times 10^{-40}}$$
 
 Even if you check $10^{12}$ keys (a trillion attempts), this becomes:
 
-$$P \approx 1 - e^{-10^{12} \times 10^{-68}} = 1 - e^{-10^{-56}} \approx 10^{-56}$$
+$$P \approx 1 - e^{-10^{12} \times 6.8 \times 10^{-40}} = 1 - e^{-6.8 \times 10^{-28}} \approx 6.8 \times 10^{-28}$$
 
 Still effectively zero. You'd need to check an incomprehensible number of keys before the birthday paradox provides any meaningful advantage.
 

@@ -7,9 +7,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Optional
 
-TOTAL_PRIVATE_KEYS = 1 << 160
+TOTAL_ADDRESS_SPACE = 1 << 160  # Ethereum address space (160-bit)
 FUNDED_ADDRESSES_ESTIMATE = 110_000_000  # Approximate funded Ethereum addresses (Oct 2025)
-HIT_CHANCE_DENOMINATOR = TOTAL_PRIVATE_KEYS / FUNDED_ADDRESSES_ESTIMATE
+HIT_CHANCE_DENOMINATOR = TOTAL_ADDRESS_SPACE / FUNDED_ADDRESSES_ESTIMATE
 
 
 @dataclass(frozen=True)
