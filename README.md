@@ -72,20 +72,24 @@ $$P(\text{hit}) = \frac{10^9}{10^{77}} = 10^{-68}$$
 
 Now let's imagine we somehow commandeer **all computational power on Earth**. As of 2025, estimates put total global computing power at roughly $10^{21}$ FLOPS. Let's generously assume we can check $10^{18}$ keys per second (unrealistic, but let's dream big).
 
+Since there are $10^9$ funded addresses in a keyspace of $10^{77}$, the expected number of attempts to find one is:
+
+$$\text{Expected attempts} = \frac{10^{77}}{10^9} = 10^{68}$$
+
 The expected time to find a single match is:
 
-$$t = \frac{\text{keyspace}}{2 \times \text{rate}} = \frac{10^{77}}{2 \times 10^{18}} = 5 \times 10^{58} \text{ seconds}$$
+$$t = \frac{10^{68}}{10^{18}} = 10^{50} \text{ seconds}$$
 
 Converting to years ($3.15 \times 10^7$ seconds per year):
 
-$$t \approx 1.6 \times 10^{51} \text{ years}$$
+$$t \approx 3.2 \times 10^{42} \text{ years}$$
 
-**Translation:** The universe is approximately $1.4 \times 10^{10}$ years old. You'd need to run this program for about $10^{41}$ consecutive universe lifetimes. To put this in cosmic perspective:
+**Translation:** The universe is approximately $1.4 \times 10^{10}$ years old. You'd need to run this program for about $2.3 \times 10^{32}$ consecutive universe lifetimes. To put this in cosmic perspective:
 
-- **Proton decay** (if it happens): $10^{34}$ to $10^{40}$ years (lower bound) - the very atoms making up your computer would decay into radiation, yet your program would still have $10^{11}$ years left to run
-- **All stars burn out**: Around $10^{14}$ years - the last stars would fade to black while you're still only $0.000001\%$ of the way there
-- **Stellar-mass black holes evaporate**: Around $10^{67}$ years - you'd actually finish BEFORE this happens, but the universe would be a cold, lightless void for the last $10^{16}$ years of your search
-- **Supermassive black holes evaporate**: Around $10^{85}$ years - if you could somehow keep running until then, you'd expect to find about $6 \times 10^{33}$ funded addresses. Not bad! Except there's no universe left, no Ethereum network, and you're a disembodied search algorithm floating in an infinite void of darkness.
+- **All stars burn out**: Around $10^{14}$ years - the last stars would fade to black while you're only $10^{-28}$ of the way there. You'd continue in total darkness for another $10^{28}$ years.
+- **Proton decay** (if it happens): $10^{34}$ to $10^{40}$ years (lower bound) - you'd finish searching somewhere in the middle of this range, meaning the very atoms making up your computer might decay before, during, or after your search completes. Either way, searching in a universe of pure radiation.
+- **Stellar-mass black holes evaporate**: Around $10^{67}$ years - you'd finish your search about $10^{25}$ years BEFORE these start evaporating. The universe would still have these dim beacons while you complete your futile quest.
+- **Supermassive black holes evaporate**: Around $10^{85}$ years - if you could somehow keep running until then, you'd complete your entire search about $10^{43}$ times over and expect to find roughly $3 \times 10^{42}$ funded addresses. Not bad! Except there's no universe left, no Ethereum network, and you're a disembodied search algorithm floating in an infinite void of darkness.
 
 Even in a dead, dark universe with no stars, no planets, no atoms - just you, somehow, checking keys - you'd finish your search and find nothing long before the final supermassive black holes evaporated into Hawking radiation. The universe would literally rather become an endless void of scattered photons than let you randomly guess someone's private key.
 
@@ -95,11 +99,15 @@ You might ask the universe's last superintelligent computer: *"How can the net a
 
 "But wait," you might say, "what about the birthday paradox? If I check billions of addresses, don't my odds improve?" 
 
-Not meaningfully. Even if you check $10^{12}$ keys, your success probability only becomes:
+Not meaningfully. When searching for any of the $10^9$ funded addresses by checking $n$ random keys, your success probability is:
 
-$$P \approx 1 - e^{-\frac{n^2}{2 \times 10^{77}}} \approx 0$$
+$$P \approx 1 - e^{-\frac{n \times 10^9}{10^{77}}} = 1 - e^{-n \times 10^{-68}}$$
 
-Still effectively zero. The birthday paradox only helps when the keyspace is much smaller.
+Even if you check $10^{12}$ keys (a trillion attempts), this becomes:
+
+$$P \approx 1 - e^{-10^{12} \times 10^{-68}} = 1 - e^{-10^{-56}} \approx 10^{-56}$$
+
+Still effectively zero. You'd need to check an incomprehensible number of keys before the birthday paradox provides any meaningful advantage.
 
 ## What If You Actually Win This Cosmic Lottery?
 
