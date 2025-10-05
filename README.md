@@ -4,13 +4,13 @@
 
 ## What Is This Madness?
 
-This is a cryptographic experiment—or perhaps a cosmic joke—that attempts to find Ethereum private keys with positive balances through pure brute-force random generation. The goal? To randomly stumble upon someone's wallet by generating private keys, deriving their addresses, and checking if they hold any ETH.
+This is a cryptographic experiment- or perhaps a cosmic joke - that attempts to find Ethereum private keys with positive balances through pure brute-force random generation. The goal? To randomly stumble upon someone's wallet by generating private keys, deriving their addresses, and checking if they hold any ETH.
 
 Spoiler alert: you won't find anything. But that's exactly the point.
 
 ## The Real Purpose: Demonstrating Cryptographic Security
 
-This project serves as a practical demonstration of why blockchain cryptography works. Ethereum (and similar blockchains) rely on the mathematical near-impossibility of finding a valid private key through random guessing. When people say "your crypto wallet is secure," this is what they mean—not that it's theoretically impossible to guess, but that the probability is so astronomically small that it might as well be impossible.
+This project serves as a practical demonstration of why blockchain cryptography works. Ethereum (and similar blockchains) rely on the mathematical near-impossibility of finding a valid private key through random guessing. When people say "your crypto wallet is secure," this is what they mean - not that it's theoretically impossible to guess, but that the probability is so astronomically small that it might as well be impossible.
 
 Unlike real-world attacks that exploit:
 - Weak random number generators
@@ -29,12 +29,26 @@ The math proves that guessing your private key is impossible. But:
 - **Phishing attacks** can trick you into revealing your seed phrase
 - **Malware** can steal keys from compromised devices
 - **Hot wallet vulnerabilities** can expose keys stored on internet-connected systems
-- **Exchange hacks** have resulted in billions of dollars stolen—not by breaking cryptography, but by exploiting security flaws in key storage and management
+- **Exchange hacks** have resulted in billions of dollars stolen - not by breaking cryptography, but by exploiting security flaws in key storage and management
 - **Social engineering** can manipulate you into handing over access
 
-Major incidents like the Mt. Gox hack (2014), Poly Network exploit (2021), and countless others didn't crack ECDSA—they exploited human error, software bugs, and operational security failures.
+Major incidents that have resulted in billions of dollars in losses all share one thing in common: none of them broke the underlying cryptography. Instead, they exploited weaknesses in implementation, human behavior, and operational security:
 
-**Bottom line:** The cryptography protecting your wallet is virtually unbreakable. You, however, might not be. Guard your private keys like they're the combination to a vault containing all your wealth—because that's exactly what they are.
+- **Mt. Gox (2014, ~$450M)**: The largest Bitcoin exchange at the time collapsed after years of poor security practices and missing funds. Private keys were stored insecurely, enabling systematic theft.
+
+- **The DAO (2016, ~$60M)**: A smart contract reentrancy vulnerability allowed an attacker to drain funds. Led to Ethereum's controversial hard fork. The cryptography was fine - the code logic wasn't.
+
+- **Parity Wallet (2017, ~$280M)**: A bug in the multi-signature wallet code allowed someone to accidentally become the owner and then "kill" the contract, freezing funds permanently. Again, not a crypto break - just more bad code.
+
+- **Coincheck (2018, ~$530M)**: Hot wallet private keys were stored on internet-connected systems without proper security measures. Attackers simply broke in and stole the keys.
+
+- **Poly Network (2021, ~$611M)**: Cross-chain bridge exploit where the attacker found a way to forge transactions between blockchains. Interestingly, the hacker later returned most funds, claiming it was a "white hat" test. We bow our heads to you anonymous hero.
+
+- **Ronin Network (2022, ~$625M)**: Social engineering and compromised private keys of validator nodes. Attackers gained control of enough validators to approve fraudulent withdrawals.
+
+- **Wormhole Bridge (2022, ~$325M)**: Smart contract vulnerability in a cross-chain bridge allowed minting of fake tokens. Cryptographic signatures worked perfectly - the validation logic didn't.
+
+**Bottom line:** The cryptography protecting your wallet is virtually unbreakable. You, however, might not be. Guard your private keys like they're the combination to a vault containing all your wealth - because that's exactly what they are.
 
 ## The Math: A Journey Through Cosmic Impossibility
 
@@ -50,15 +64,15 @@ To put this in perspective, this number is larger than the estimated number of a
 
 ### The Target
 
-Let's be extremely generous and assume there are $10^8$ (100 million) Ethereum addresses with positive balances. The probability of randomly generating one of these addresses is:
+Let's be extremely generous and assume there are $10^9$ (1 billion) Ethereum addresses with positive balances. The probability of randomly generating one of these addresses is:
 
-$$P(\text{hit}) = \frac{10^8}{10^{77}} = 10^{-69}$$
+$$P(\text{hit}) = \frac{10^9}{10^{77}} = 10^{-68}$$
 
 ### Time to Success
 
 Now let's imagine we somehow commandeer **all computational power on Earth**. As of 2025, estimates put total global computing power at roughly $10^{21}$ FLOPS. Let's generously assume we can check $10^{18}$ keys per second (unrealistic, but let's dream big).
 
-The expected time to find a single collision is:
+The expected time to find a single match is:
 
 $$t = \frac{\text{keyspace}}{2 \times \text{rate}} = \frac{10^{77}}{2 \times 10^{18}} = 5 \times 10^{58} \text{ seconds}$$
 
@@ -66,17 +80,22 @@ Converting to years ($3.15 \times 10^7$ seconds per year):
 
 $$t \approx 1.6 \times 10^{51} \text{ years}$$
 
-For context, the universe is approximately $1.4 \times 10^{10}$ years old. You'd need to wait for:
+**Translation:** The universe is approximately $1.4 \times 10^{10}$ years old. You'd need to run this program for about $10^{41}$ consecutive universe lifetimes. To put this in cosmic perspective:
 
-$$\frac{1.6 \times 10^{51}}{1.4 \times 10^{10}} \approx 10^{41} \text{ universe lifetimes}$$
+- **Proton decay** (if it happens): $10^{34}$ to $10^{40}$ years (lower bound) - the very atoms making up your computer would decay into radiation, yet your program would still have $10^{11}$ years left to run
+- **All stars burn out**: Around $10^{14}$ years - the last stars would fade to black while you're still only $0.000001\%$ of the way there
+- **Stellar-mass black holes evaporate**: Around $10^{67}$ years - you'd actually finish BEFORE this happens, but the universe would be a cold, lightless void for the last $10^{16}$ years of your search
+- **Supermassive black holes evaporate**: Around $10^{85}$ years - if you could somehow keep running until then, you'd expect to find about $6 \times 10^{33}$ funded addresses. Not bad! Except there's no universe left, no Ethereum network, and you're a disembodied search algorithm floating in an infinite void of darkness.
 
-**Translation:** Even if you harnessed every computer on Earth and ran them continuously for trillions upon trillions of times the age of the universe, you'd still be nowhere close.
+Even in a dead, dark universe with no stars, no planets, no atoms - just you, somehow, checking keys - you'd finish your search and find nothing long before the final supermassive black holes evaporated into Hawking radiation. The universe would literally rather become an endless void of scattered photons than let you randomly guess someone's private key.
+
+You might ask the universe's last superintelligent computer: *"How can the net amount of entropy of the universe be massively decreased?"* hoping to somehow reverse time and continue your search. But even Multivac's distant descendant would simply respond: *INSUFFICIENT DATA FOR A MEANINGFUL ANSWER.*
 
 ### Birthday Paradox Disclaimer
 
 "But wait," you might say, "what about the birthday paradox? If I check billions of addresses, don't my odds improve?" 
 
-Not meaningfully. Even if you check $10^{12}$ keys, your collision probability only becomes:
+Not meaningfully. Even if you check $10^{12}$ keys, your success probability only becomes:
 
 $$P \approx 1 - e^{-\frac{n^2}{2 \times 10^{77}}} \approx 0$$
 
@@ -86,7 +105,7 @@ Still effectively zero. The birthday paradox only helps when the keyspace is muc
 
 In the incomprehensibly unlikely event that this tool finds a funded address:
 
-1. **Don't steal the funds.** Seriously. That's theft, and also you'd be the luckiest person in human history—maybe use that luck for good?
+1. **Don't steal the funds.** Seriously. That's theft, and also you'd be the luckiest person in human history - maybe use that luck for good?
 2. **Document everything.** This would be a cryptographically significant event worthy of academic papers.
 3. **Responsible disclosure.** Contact the address owner if possible, or Ethereum security researchers.
 4. **Buy a lottery ticket.** Your odds of winning those are *much* better (typically around $10^{-7}$ to $10^{-9}$), so if you can beat $10^{-69}$, you can definitely beat those.
@@ -152,7 +171,7 @@ The RPC endpoint **must support JSON-RPC POST batching** (`eth_getBalance`).
 python -m coin_finder scan --workers 6 --batch-size 100
 ```
 
-The process runs until interrupted (Ctrl+C). Hits are appended to `output/eth_hits.csv`. The dashboard renders three stacked panels—the main summary, *Throughput Rates* (requests/sec and keys/sec), and *Lifetime Stats* (runtime, totals, and hit chance). Lifetime counters persist between runs via `output/stats.json`.
+The process runs until interrupted (Ctrl+C). Hits are appended to `output/eth_hits.csv`. The dashboard renders three stacked panels - the main summary, *Throughput Rates* (requests/sec and keys/sec), and *Lifetime Stats* (runtime, totals, and hit chance). Lifetime counters persist between runs via `output/stats.json`.
 
 ![Dashboard Preview](https://i.imgur.com/aTvXDOb.png)
 
@@ -253,7 +272,7 @@ The current design isolates chain-specific logic from the pipeline.
 ## Security considerations
 
 - Private keys are only written when a positive balance is detected. Secure the `output/` directory accordingly.
-- Avoid logging beyond hits. DEBUG-level logs can leak timing information—use only for development.
+- Avoid logging beyond hits. DEBUG-level logs can leak timing information - use only for development.
 - Store API keys in `.env`. The `.gitignore` already excludes `.env` and `output/`.
 
 ---
@@ -270,6 +289,6 @@ The current design isolates chain-specific logic from the pipeline.
 
 ## License
 
-GNU AFFERO GENERAL PUBLIC LICENSE — see [LICENSE](LICENSE).
+GNU AFFERO GENERAL PUBLIC LICENSE - see [LICENSE](LICENSE).
 
 Happy hacking (responsibly)! 🛠️
