@@ -175,12 +175,12 @@ The RPC endpoint **must support JSON-RPC POST batching** (`eth_getBalance`).
 > ```
 > ETH_RPC_URL=https://ethereum-rpc.publicnode.com/
 > ```
-> Then run with: `python -m coin_finder scan --workers 4 --batch-size 100`
+> Then run with: `python -m coin_finder --workers 4 --batch-size 100`
 
 ### 4. Run the scanner
 
 ```bash
-python -m coin_finder scan --workers 6 --batch-size 100
+python -m coin_finder --workers 6 --batch-size 100
 ```
 
 The process runs until interrupted (Ctrl+C). Hits are appended to `output/eth_hits.csv`. The dashboard renders three stacked panels - the main summary, *Throughput Rates* (requests/sec and keys/sec), and *Lifetime Stats* (runtime, totals, and hit chance). Lifetime counters persist between runs via `output/stats.json`.
@@ -191,7 +191,7 @@ The process runs until interrupted (Ctrl+C). Hits are appended to `output/eth_hi
 
 ## CLI reference
 
-`python -m coin_finder scan [OPTIONS]`
+`python -m coin_finder [OPTIONS]`
 
 | Option | Description | Default / ENV |
 |--------|-------------|---------------|
@@ -273,7 +273,7 @@ The current design isolates chain-specific logic from the pipeline.
 | Goal | Suggestion |
 |------|------------|
 | Smoke test | Run with a local mock RPC server or set `--batch-size 5` and intercept requests (e.g., mitmproxy). |
-| Throughput benchmark | Configure a fast provider (low latency). Run `python -m coin_finder scan --workers 16 --batch-size 2048 --stats-refresh-interval 0.5` and observe the dashboard rates. |
+| Throughput benchmark | Configure a fast provider (low latency). Run `python -m coin_finder --workers 16 --batch-size 2048 --stats-refresh-interval 0.5` and observe the dashboard rates. |
 | Retry logic | Intentionally return HTTP 429/500 from a mock server to ensure exponential backoff kicks in (log level DEBUG). |
 | Deterministic behavior | Supply `--seed foo` and capture addresses generated in first batch to verify reproducibility. |
 
