@@ -11,17 +11,12 @@ getcontext().prec = 40  # High precision for ETH balances
 @dataclass(slots=True)
 class KeyCandidate:
     address: str
-    private_key: bytes
     public_key: bytes
     worker_id: int
     batch_id: int
     index: int
     seed_descriptor: str
     generated_at: float
-
-    @property
-    def private_key_hex(self) -> str:
-        return self.private_key.hex()
 
     @property
     def public_key_hex(self) -> str:
@@ -31,7 +26,6 @@ class KeyCandidate:
 @dataclass(slots=True)
 class HitRecord:
     address: str
-    private_key_hex: str
     public_key_hex: str
     balance_wei: int
     balance_eth: str
@@ -53,7 +47,6 @@ class HitRecord:
         balance_eth = Decimal(balance_wei) / Decimal(10**18)
         return cls(
             address=candidate.address,
-            private_key_hex=candidate.private_key_hex,
             public_key_hex=candidate.public_key_hex,
             balance_wei=balance_wei,
             balance_eth=f"{balance_eth:.18f}",

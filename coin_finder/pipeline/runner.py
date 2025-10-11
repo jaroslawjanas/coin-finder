@@ -17,7 +17,6 @@ from coin_finder.ui.dashboard import dashboard_loop
 logger = logging.getLogger(__name__)
 
 CSV_HEADERS: Sequence[str] = (
-    "private_key_hex",
     "public_key_hex",
     "address",
     "balance_wei",

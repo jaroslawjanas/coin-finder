@@ -32,7 +32,6 @@ class AsyncCSVWriter:
             for hit in hits:
                 writer.writerow(
                     {
-                        "private_key_hex": hit.private_key_hex,
                         "public_key_hex": hit.public_key_hex,
                         "address": hit.address,
                         "balance_wei": str(hit.balance_wei),

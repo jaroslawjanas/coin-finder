@@ -4,7 +4,7 @@ import asyncio
 import logging
 import time
 
-from coin_finder.chains.eth.keygen import generate_eth_keypair
+from coin_finder.chains.eth.keygen import generate_eth_public_key_material
 from coin_finder.config import AppConfig
 from coin_finder.pipeline.csv_writer import AsyncCSVWriter
 from coin_finder.pipeline.models import HitRecord, KeyCandidate
@@ -42,11 +42,10 @@ async def run_worker(
         for index in range(config.batch_size):
             if stop_event.is_set():
                 break
-            material = generate_eth_keypair(rng)
+            material = generate_eth_public_key_material(rng)
             candidates.append(
                 KeyCandidate(
                     address=material.address,
-                    private_key=material.private_key,
                     public_key=material.public_key,
                     worker_id=worker_id,
                     batch_id=batch_id,
