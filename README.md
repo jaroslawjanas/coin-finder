@@ -4,9 +4,9 @@
 
 ## What Is This Madness?
 
-This is a cryptographic experiment- or perhaps a cosmic joke - that attempts to find Ethereum private keys with positive balances through pure brute-force random generation. The goal? To randomly stumble upon someone's wallet by generating private keys, deriving their addresses, and checking if they hold any ETH.
+This is a cryptographic experiment — or perhaps a cosmic joke — that attempts to find Ethereum accounts with positive balances through pure brute-force random generation of **public keys**. Every worker samples a random secp256k1 scalar, derives the corresponding public key and address, immediately discards the scalar, and asks an RPC provider whether that address holds any ETH.
 
-Spoiler alert: you won't find anything. But that's exactly the point.
+Spoiler alert: you still won't find anything. But that's exactly the point.
 
 ## The Real Purpose: Demonstrating Cryptographic Security
 
@@ -216,11 +216,10 @@ All options have matching environment variables. CLI flags override env values.
 Hits are appended to `output/<hits_filename>` with headers:
 
 ```
-private_key_hex,public_key_hex,address,balance_wei,balance_eth,detected_at
+public_key_hex,address,balance_wei,balance_eth,detected_at
 ```
 
 Each successful hit is recorded with:
-- **private_key_hex**: The private key in hexadecimal format
 - **public_key_hex**: The public key in hexadecimal format  
 - **address**: The Ethereum address
 - **balance_wei**: Balance in wei (smallest ETH unit)
@@ -283,7 +282,7 @@ The current design isolates chain-specific logic from the pipeline.
 
 ## Security considerations
 
-- Private keys are only written when a positive balance is detected. Secure the `output/` directory accordingly.
+- Private scalars are never persisted. Hits only include public keys, addresses, balances, and timestamps; treat `output/` as sensitive metadata regardless.
 - Avoid logging beyond hits. DEBUG-level logs can leak timing information - use only for development.
 - Store API keys in `.env`. The `.gitignore` already excludes `.env` and `output/`.
 
