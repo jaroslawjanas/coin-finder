@@ -20,14 +20,9 @@ class SupportsGetBytes(Protocol):
 
 
 @dataclass(slots=True)
-class EthKeyMaterial:
-    private_key: bytes
+class EthPublicKeyMaterial:
     public_key: bytes
     address: str
-
-    @property
-    def private_key_hex(self) -> str:
-        return self.private_key.hex()
 
     @property
     def public_key_hex(self) -> str:
@@ -59,9 +54,11 @@ def derive_eth_address(public_key_uncompressed: bytes) -> str:
     return to_checksum_address(address_bytes)
 
 
-def generate_eth_keypair(rng: SupportsGetBytes | HashStreamRNG | None = None) -> EthKeyMaterial:
+def generate_eth_public_key_material(
+    rng: SupportsGetBytes | HashStreamRNG | None = None,
+) -> EthPublicKeyMaterial:
     """
-    Generate a random Ethereum private key, derive the corresponding public key and address.
+    Generate a random Ethereum public key (and derived address) without exposing the private scalar.
 
     Parameters
     ----------
@@ -72,12 +69,17 @@ def generate_eth_keypair(rng: SupportsGetBytes | HashStreamRNG | None = None) ->
     if rng is None:
         rng = HashStreamRNG.from_seed_components(None)
 
-    private_key_bytes = _generate_private_key_bytes(rng)
-    priv = PrivateKey(private_key_bytes)
-    pub_uncompressed = priv.public_key.format(compressed=False)[1:]  # drop 0x04 prefix
+    # Draw a random scalar in the valid secp256k1 range, use it to derive the public point,
+    # and immediately discard it so it is never persisted beyond this function scope.
+    secret_scalar = _generate_private_key_bytes(rng)
+    priv = PrivateKey(secret_scalar)
+    try:
+        pub_uncompressed = priv.public_key.format(compressed=False)[1:]  # drop 0x04 prefix
+    finally:
+        # Ensure the secret scalar and PrivateKey wrapper are not retained.
+        del priv
     address = derive_eth_address(pub_uncompressed)
-    return EthKeyMaterial(
-        private_key=private_key_bytes,
+    return EthPublicKeyMaterial(
         public_key=pub_uncompressed,
         address=address,
     )
