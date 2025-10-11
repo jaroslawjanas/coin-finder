@@ -10,7 +10,7 @@ Spoiler alert: you still won't find anything. But that's exactly the point.
 
 ## The Real Purpose: Demonstrating Cryptographic Security
 
-This project serves as a practical demonstration of why blockchain cryptography works. Ethereum (and similar blockchains) rely on the mathematical near-impossibility of finding a valid private key through random guessing. When people say "your crypto wallet is secure," this is what they mean - not that it's theoretically impossible to guess, but that the probability is so astronomically small that it might as well be impossible.
+This project serves as a practical demonstration of why blockchain cryptography works. Ethereum (and similar blockchains) rely on the mathematical near-impossibility of randomly producing a private key that maps to a funded address. When people say "your crypto wallet is secure," this is what they mean—not that it is theoretically impossible to collide with an existing account, but that the probability is so astronomically small that it might as well be impossible.
 
 Unlike real-world attacks that exploit:
 - Weak random number generators
@@ -56,7 +56,7 @@ Let's quantify exactly how hopeless this endeavor is.
 
 ### The Keyspace
 
-Here's a crucial distinction: Ethereum uses **256-bit private keys**, but these are hashed down to **160-bit addresses** using the Keccak-256 algorithm. When we're searching for funded wallets, what matters is the **address space**, not the private key space.
+Here's a crucial distinction: Ethereum uses **256-bit private keys** , but these are hashed down to **160-bit addresses** using the Keccak-256 algorithm. What actually matters when looking for collisions is the **address space**, not the private key space.
 
 **Private key space:** $2^{256} \approx 1.16 \times 10^{77}$ possible private keys
 
@@ -113,27 +113,11 @@ $$P \approx 1 - e^{-10^{12} \times 6.8 \times 10^{-40}} = 1 - e^{-6.8 \times 10^
 
 Still effectively zero. You'd need to check an incomprehensible number of keys before the birthday paradox provides any meaningful advantage.
 
-## What If You Actually Win This Cosmic Lottery?
+## Why Run This Experiment Anyway?
 
-In the incomprehensibly unlikely event that this tool finds a funded address:
+Even though the probability math screams “futile,” running the scanner makes that futility visceral. Watching billions of random public keys miss every funded address drives home how enormous the address space really is, why unbiased entropy matters, and why real attackers focus on social engineering, poor wallet hygiene, or implementation bugs instead of brute force. Treat the tool as an educational dashboard for cryptographic scale—not a treasure hunter.
 
-1. **Don't steal the funds.** Seriously. That's theft, and also you'd be the luckiest person in human history - maybe use that luck for good?
-2. **Document everything.** This would be a cryptographically significant event worthy of academic papers.
-3. **Responsible disclosure.** Contact the address owner if possible, or Ethereum security researchers.
-4. **Buy a lottery ticket.** Your odds of winning those are *much* better (typically around $10^{-7}$ to $10^{-9}$), so if you can beat $10^{-69}$, you can definitely beat those.
-
-> ⚠️ **Warning**  
-> Treat coin-finder as an educational tool. Any improbable successes must be handled responsibly and ethically.
-
-## But Hey, You Never Know...
-
-Improbable is not impossible. Every private key is technically valid. Somewhere in that $10^{77}$ keyspace are all the funded wallets, waiting to be found. The math says you won't find them, but mathematics deals in probabilities, not certainties.
-
-Maybe the universe's random number generator will smile upon you. Maybe you'll be the one person in all of history to crack this cosmic safe with a lucky guess. Maybe pigs will fly and hell will freeze over simultaneously.
-
-Or, more likely, this tool will serve its intended purpose: demonstrating through direct experience why cryptography works and why your crypto wallet is actually secure.
-
-Happy hunting! 🔍
+Happy exploring! 🔍
 
 ---
 
